@@ -1,0 +1,14 @@
+# VSCODE
+.vscode/
+
+# ENV
+.env
+
+# Dependency directories
+node_modules/
+
+# Node Lock
+package-lock.json
+
+# Build
+build/
