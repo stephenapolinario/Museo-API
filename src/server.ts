@@ -65,8 +65,9 @@ const StartServer = () => {
 			saveUninitialized: true,
 		}),
 	);
-	// Applying the '/api' prefix to every route
-	app.use('/api', router);
+	const version = 'v0';
+	// Applying the '/api/version' prefix to every route
+	app.use(`/api/${version}`, router);
 
 	// Rules of our API
 	router.use((req, res, next) => {
