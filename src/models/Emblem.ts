@@ -5,7 +5,6 @@ export interface IEmblem {
 	image: string;
 	minPoints: number;
 	maxPoints: number;
-	tour: string;
 	quiz: string;
 }
 
@@ -27,11 +26,6 @@ const EmblemSchema: Schema = new Schema({
 	maxPoints: {
 		type: Number,
 		required: true,
-	},
-	tour: {
-		type: Schema.Types.ObjectId,
-		required: true,
-		ref: 'Tour',
 	},
 	quiz: {
 		type: Schema.Types.ObjectId,

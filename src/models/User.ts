@@ -1,5 +1,10 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import { IEmblemModel } from './Emblem';
 
+export interface IQuizPeformance {
+	quiz: string;
+	points: number;
+}
 export interface IUser {
 	name: string;
 	lastName: string;
@@ -17,6 +22,8 @@ export interface IUser {
 	password: string;
 	picture: string;
 	role: string;
+	emblems: IEmblemModel[];
+	quizPerformances: IQuizPeformance[];
 }
 
 export interface IUserModel extends IUser, Document {}
@@ -87,6 +94,14 @@ const UserSchema: Schema = new Schema(
 			type: Schema.Types.ObjectId,
 			required: true,
 			ref: 'Role',
+		},
+		emblems: {
+			type: [Object],
+			default: [],
+		},
+		quizPerformances: {
+			type: [Object],
+			default: [],
 		},
 	},
 	{

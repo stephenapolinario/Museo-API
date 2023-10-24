@@ -33,7 +33,7 @@ const router = express.Router();
 // Get Quiz ByID
 router.get('/:quizId', controller.readQuiz);
 
-// Generate the quiz perfomance to the user and emblem
+// Generate the quiz perfomance to the user and emblem (The performance is AES encrypted)
 router.get('/performance/:performance', controller.generatePerformance);
 
 // 2. Admin Access Level

@@ -15,17 +15,9 @@ const createEmblem = async (req: Request, res: Response, next: NextFunction) => 
 		minPoints,
 		maxPoints,
 		quiz,
-		tour,
 	});
 
 	try {
-		const providedTour = await Tour.findById(tour);
-
-		if (!providedTour) {
-			Logging.warn(`There is no Tour with ID [${tour}]`);
-			return res.status(400).json({ error: `There is no Tour with ID [${tour}]` });
-		}
-
 		const providedQuiz = await Quiz.findById(quiz);
 
 		if (!providedQuiz) {
@@ -44,7 +36,7 @@ const readEmblem = async (req: Request, res: Response, next: NextFunction) => {
 	const emblemId = req.params.emblemId;
 
 	try {
-		const emblem = await Emblem.findById(emblemId).populate(['quiz', 'tour']).select('-__v');
+		const emblem = await Emblem.findById(emblemId).populate('quiz').select('-__v');
 		return emblem
 			? res.status(200).json({ emblem })
 			: res.status(404).json({ message: `Not found emblem with id [${emblemId}]` });
@@ -58,7 +50,7 @@ const readEmblem = async (req: Request, res: Response, next: NextFunction) => {
 
 const readAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const emblems = await Emblem.find().populate(['tour', 'quiz']).select('-__v');
+		const emblems = await Emblem.find().populate('quiz').select('-__v');
 
 		return res.status(200).json({ emblems });
 	} catch (error) {
@@ -71,19 +63,9 @@ const updateEmblem = async (req: Request, res: Response, next: NextFunction) => 
 
 	try {
 		const emblem = await Emblem.findById(emblemId).select('-__v');
+
 		if (!emblem) {
 			return res.status(404).json({ message: `Not found emblem with id [${emblemId}]` });
-		}
-
-		if (req.body.tour) {
-			const providedTour = await Tour.findById(req.body.tour);
-
-			if (!providedTour) {
-				Logging.warn(`There is no Tour with ID [${req.body.tour}]`);
-				return res
-					.status(400)
-					.json({ error: `There is no Tour with ID [${req.body.tour}]` });
-			}
 		}
 
 		if (req.body.quiz) {

@@ -361,9 +361,6 @@ export const Schemas = {
 	emblem: {
 		create: Joi.object<IEmblem>({
 			title: Joi.string().required(),
-			tour: Joi.string()
-				.regex(/^[a-zA-Z0-9]{24}$/)
-				.required(),
 			quiz: Joi.string()
 				.regex(/^[a-zA-Z0-9]{24}$/)
 				.required(),
@@ -373,9 +370,6 @@ export const Schemas = {
 		}),
 		update: Joi.object<IEmblem>({
 			title: Joi.string().allow(null, ''),
-			tour: Joi.string()
-				.regex(/^[a-zA-Z0-9]{24}$/)
-				.allow(null, ''),
 			quiz: Joi.string()
 				.regex(/^[a-zA-Z0-9]{24}$/)
 				.allow(null, ''),
