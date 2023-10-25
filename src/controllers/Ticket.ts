@@ -28,10 +28,10 @@ const readTicket = async (req: Request, res: Response, next: NextFunction) => {
 		const ticket = await Ticket.findById(ticketId).select('-__v');
 		return ticket
 			? res.status(200).json({ ticket })
-			: res.status(404).json({ message: `Not found ticket with id [${ticketId}]` });
+			: res.status(404).json({ error: `Not found ticket with id [${ticketId}]` });
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -52,7 +52,7 @@ const updateTicket = async (req: Request, res: Response, next: NextFunction) => 
 	try {
 		const ticket = await Ticket.findById(ticketId).select('-__v');
 		if (!ticket) {
-			return res.status(404).json({ message: `Not found ticket with id [${ticketId}]` });
+			return res.status(404).json({ error: `Not found ticket with id [${ticketId}]` });
 		}
 		ticket.set(req.body);
 		ticket
@@ -61,7 +61,7 @@ const updateTicket = async (req: Request, res: Response, next: NextFunction) => 
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -74,7 +74,7 @@ const deleteTicket = async (req: Request, res: Response, next: NextFunction) => 
 		const ticket = await Ticket.findByIdAndDelete(ticketId);
 		return ticket
 			? res.status(201).json({ message: 'Ticket deleted' })
-			: res.status(404).json({ message: 'Not found' });
+			: res.status(404).json({ error: 'Not found' });
 	} catch (error) {
 		return res.status(500).json({ error });
 	}

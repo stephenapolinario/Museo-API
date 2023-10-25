@@ -44,11 +44,11 @@ const readMuseumInformation = async (req: Request, res: Response, next: NextFunc
 		return museumInformation
 			? res.status(200).json({ museumInformation })
 			: res.status(404).json({
-					message: `Not found museumInformation with id [${museumInformationId}]`,
+					error: `Not found museumInformation with id [${museumInformationId}]`,
 			  });
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -86,11 +86,13 @@ const updateMuseumInformation = async (req: Request, res: Response, next: NextFu
 	try {
 		const museumInformation =
 			await MuseumInformation.findById(museumInformationId).select('-__v');
+
 		if (!museumInformation) {
 			return res
 				.status(404)
-				.json({ message: `Not found museumInformation with id [${museumInformationId}]` });
+				.json({ error: `Not found museumInformation with id [${museumInformationId}]` });
 		}
+
 		museumInformation.set(req.body);
 		museumInformation
 			.save()
@@ -98,8 +100,9 @@ const updateMuseumInformation = async (req: Request, res: Response, next: NextFu
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
+
 		return res.status(500).json({ error });
 	}
 };
@@ -111,7 +114,7 @@ const deleteMuseumInformation = async (req: Request, res: Response, next: NextFu
 		const museumInformation = await MuseumInformation.findByIdAndDelete(museumInformationId);
 		return museumInformation
 			? res.status(201).json({ message: 'MuseumInformation deleted' })
-			: res.status(404).json({ message: 'Not found' });
+			: res.status(404).json({ error: 'Not found' });
 	} catch (error) {
 		return res.status(500).json({ error });
 	}

@@ -74,10 +74,10 @@ const readUser = async (req: Request, res: Response, next: NextFunction) => {
 		const user = await User.findById(userId).populate('role').select('-__v');
 		return user
 			? res.status(200).json({ user })
-			: res.status(404).json({ message: 'Not found' });
+			: res.status(404).json({ error: 'Not found user with this id' });
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -98,7 +98,7 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 
 	// If no token is provided
 	if (!authHeader) {
-		return res.status(401).json({ auth: false, message: 'No token provided.' });
+		return res.status(401).json({ auth: false, error: 'No token provided.' });
 	}
 
 	// Delete 'bearer' from 'bearer TOKEN'
@@ -124,14 +124,14 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 				Logging.warn(`Failed to authenticate with token [${token}]`);
 				return res
 					.status(403)
-					.json({ auth: false, message: 'Failed to authenticate token.' });
+					.json({ auth: false, error: 'Failed to authenticate token.' });
 			}
 
 			// If is valid, check if the current user from token is the same that want to update
 			const decodedPayload = decoded as JwtPayload;
 			if (decodedPayload.id !== userId) {
 				return res.status(403).json({
-					message: 'Your authenticate code is not from this user id',
+					error: 'Your authenticate code is not from this user id',
 				});
 			}
 			// Try update the user, is update, return user updated. If cant, return error.
@@ -146,7 +146,7 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 	} catch (error) {
 		// If error is from mongoose cast error return invalid format id
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -159,7 +159,7 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
 		const user = await User.findByIdAndDelete(userId);
 		return user
 			? res.status(201).json({ message: 'User deleted' })
-			: res.status(404).json({ message: 'Not found' });
+			: res.status(404).json({ error: 'Not found' });
 	} catch (error) {
 		return res.status(500).json({ error });
 	}
@@ -172,13 +172,13 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 		const user = await User.findOne({ email: email });
 
 		if (!user) {
-			return res.status(404).send({ message: 'User Not found.' });
+			return res.status(404).send({ error: 'Email Not found' });
 		}
 
 		const passwordIsValid = bcrypt.compareSync(password, user.password);
 
 		if (!passwordIsValid) {
-			return res.status(401).send({ message: 'Invalid Password!' });
+			return res.status(401).send({ error: 'Invalid Password!' });
 		}
 
 		const acessToken = process.env.ACCESS_TOKEN_SECRET;

@@ -27,10 +27,10 @@ const readTour = async (req: Request, res: Response, next: NextFunction) => {
 		const tour = await Tour.findById(tourId).select('-__v');
 		return tour
 			? res.status(200).json({ tour })
-			: res.status(404).json({ message: `Not found tour with id [${tourId}]` });
+			: res.status(404).json({ error: `Not found tour with id [${tourId}]` });
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -51,7 +51,7 @@ const updateTour = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const tour = await Tour.findById(tourId).select('-__v');
 		if (!tour) {
-			return res.status(404).json({ message: `Not found tour with id [${tourId}]` });
+			return res.status(404).json({ error: `Not found tour with id [${tourId}]` });
 		}
 
 		if (req.body.title) {
@@ -64,7 +64,7 @@ const updateTour = async (req: Request, res: Response, next: NextFunction) => {
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -77,7 +77,7 @@ const deleteTour = async (req: Request, res: Response, next: NextFunction) => {
 		const tour = await Tour.findByIdAndDelete(tourId);
 		return tour
 			? res.status(201).json({ message: 'Tour deleted' })
-			: res.status(404).json({ message: 'Not found' });
+			: res.status(404).json({ error: 'Not found' });
 	} catch (error) {
 		return res.status(500).json({ error });
 	}

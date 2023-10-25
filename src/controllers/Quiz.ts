@@ -7,7 +7,7 @@ import Tour from '../models/Tour';
 import * as crypto from 'crypto';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import User, { IQuizPeformance, IUser, IUserModel } from '../models/User';
-import Emblem, { IEmblem, IEmblemModel } from '../models/Emblem';
+import Emblem, { IEmblemModel } from '../models/Emblem';
 
 interface DecryptedData {
 	quiz: string;
@@ -56,10 +56,10 @@ const readQuiz = async (req: Request, res: Response, next: NextFunction) => {
 		const quiz = await Quiz.findById(quizId).select('-__v');
 		return quiz
 			? res.status(200).json({ quiz })
-			: res.status(404).json({ message: `Not found quiz with id [${quizId}]` });
+			: res.status(404).json({ error: `Not found quiz with id [${quizId}]` });
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -80,7 +80,7 @@ const updateQuiz = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const quiz = await Quiz.findById(quizId).select('-__v');
 		if (!quiz) {
-			return res.status(404).json({ message: `Not found quiz with id [${quizId}]` });
+			return res.status(404).json({ error: `Not found quiz with id [${quizId}]` });
 		}
 		quiz.set(req.body);
 		quiz.save()
@@ -88,7 +88,7 @@ const updateQuiz = async (req: Request, res: Response, next: NextFunction) => {
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -101,7 +101,7 @@ const deleteQuiz = async (req: Request, res: Response, next: NextFunction) => {
 		const quiz = await Quiz.findByIdAndDelete(quizId);
 		return quiz
 			? res.status(201).json({ message: 'Quiz deleted' })
-			: res.status(404).json({ message: 'Not found' });
+			: res.status(404).json({ error: 'Not found' });
 	} catch (error) {
 		return res.status(500).json({ error });
 	}
@@ -120,14 +120,14 @@ const generatePerformance = async (req: Request, res: Response, next: NextFuncti
 		Logging.warn('You need to provide a performance to access this endpoint');
 		return res
 			.status(400)
-			.json({ Error: 'You need to provide a performance to access this endpoint' });
+			.json({ error: 'You need to provide a performance to access this endpoint' });
 	}
 
 	// Check if there is an auth
 	const authHeader = req.headers.authorization;
 
 	if (!authHeader) {
-		return res.status(401).json({ auth: false, message: 'No token provided.' });
+		return res.status(401).json({ auth: false, error: 'No token provided.' });
 	}
 
 	// Check if the auth have a bearer
@@ -186,7 +186,7 @@ const generatePerformance = async (req: Request, res: Response, next: NextFuncti
 
 		if (!('quiz' in userPerformance) || !('points' in userPerformance)) {
 			Logging.warn('There is no Quiz or Points in the provided performance');
-			return res.status(400).json({ Error: 'There is some error in your performance' });
+			return res.status(400).json({ error: 'There is some error in your performance' });
 		}
 		const objectIdRegex = /^[0-9a-fA-F]{24}$/;
 
@@ -194,7 +194,7 @@ const generatePerformance = async (req: Request, res: Response, next: NextFuncti
 			Logging.warn(`There is no quiz with ID [${userPerformance.quiz}]`);
 			return res
 				.status(400)
-				.json({ Error: `There is no quiz with ID [${userPerformance.quiz}]` });
+				.json({ error: `There is no quiz with ID [${userPerformance.quiz}]` });
 		}
 
 		const quizFromData = await Quiz.findById(userPerformance.quiz);
@@ -203,7 +203,7 @@ const generatePerformance = async (req: Request, res: Response, next: NextFuncti
 			Logging.warn(`There is no quiz with ID [${userPerformance.quiz}]`);
 			return res
 				.status(400)
-				.json({ Error: `There is no quiz with ID [${userPerformance.quiz}]` });
+				.json({ error: `There is no quiz with ID [${userPerformance.quiz}]` });
 		}
 
 		// If arive here, its all good and you can store the quizz + points + emblem on user.

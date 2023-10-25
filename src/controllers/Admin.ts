@@ -45,7 +45,7 @@ const readAdmin = async (req: Request, res: Response, next: NextFunction) => {
 	} catch (error) {
 		// If error is from mongoose cast error return invalid format id
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -84,7 +84,7 @@ const updateAdmin = async (req: Request, res: Response, next: NextFunction) => {
 	} catch (error) {
 		// If error is from mongoose cast error return invalid format id
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -97,11 +97,11 @@ const deleteAdmin = async (req: Request, res: Response, next: NextFunction) => {
 		const admin = await Admin.findByIdAndDelete(adminId);
 		return admin
 			? res.status(201).json({ message: 'Admin deleted' })
-			: res.status(404).json({ message: 'Not found admin with this ID' });
+			: res.status(404).json({ error: 'Not found admin with this ID' });
 	} catch (error) {
 		// If error is from mongoose cast error return invalid format id
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -114,13 +114,13 @@ const loginAdmin = async (req: Request, res: Response, next: NextFunction) => {
 		const admin = await Admin.findOne({ email: email });
 
 		if (!admin) {
-			return res.status(404).send({ message: 'Admin Not found' });
+			return res.status(404).send({ error: 'Admin Not found' });
 		}
 
 		const passwordIsValid = bcrypt.compareSync(password, admin.password);
 
 		if (!passwordIsValid) {
-			return res.status(401).send({ message: 'Invalid Password!' });
+			return res.status(401).send({ error: 'Invalid Password!' });
 		}
 
 		const acessToken = process.env.ADMIN_TOKEN_SECRET;

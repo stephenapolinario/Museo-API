@@ -51,10 +51,10 @@ const readMuseumPiece = async (req: Request, res: Response, next: NextFunction) 
 			.select('-__v');
 		return museumPiece
 			? res.status(200).json({ museumPiece })
-			: res.status(404).json({ message: `Not found museumPiece with id [${museumPieceId}]` });
+			: res.status(404).json({ error: `Not found museumPiece with id [${museumPieceId}]` });
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -77,7 +77,7 @@ const updateMuseumPiece = async (req: Request, res: Response, next: NextFunction
 		if (!museumPiece) {
 			return res
 				.status(404)
-				.json({ message: `Not found museumPiece with id [${museumPieceId}]` });
+				.json({ error: `Not found museumPiece with id [${museumPieceId}]` });
 		}
 		museumPiece.set(req.body);
 		museumPiece
@@ -86,7 +86,7 @@ const updateMuseumPiece = async (req: Request, res: Response, next: NextFunction
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -99,7 +99,7 @@ const deleteMuseumPiece = async (req: Request, res: Response, next: NextFunction
 		const museumPiece = await MuseumPiece.findByIdAndDelete(museumPieceId);
 		return museumPiece
 			? res.status(201).json({ message: 'MuseumPiece deleted' })
-			: res.status(404).json({ message: 'Not found' });
+			: res.status(404).json({ error: 'Not found' });
 	} catch (error) {
 		return res.status(500).json({ error });
 	}

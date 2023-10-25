@@ -42,7 +42,7 @@ const readEmblem = async (req: Request, res: Response, next: NextFunction) => {
 			: res.status(404).json({ message: `Not found emblem with id [${emblemId}]` });
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -65,7 +65,7 @@ const updateEmblem = async (req: Request, res: Response, next: NextFunction) => 
 		const emblem = await Emblem.findById(emblemId).select('-__v');
 
 		if (!emblem) {
-			return res.status(404).json({ message: `Not found emblem with id [${emblemId}]` });
+			return res.status(404).json({ error: `Not found emblem with id [${emblemId}]` });
 		}
 
 		if (req.body.quiz) {
@@ -86,7 +86,7 @@ const updateEmblem = async (req: Request, res: Response, next: NextFunction) => 
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -99,7 +99,7 @@ const deleteEmblem = async (req: Request, res: Response, next: NextFunction) => 
 		const emblem = await Emblem.findByIdAndDelete(emblemId);
 		return emblem
 			? res.status(201).json({ message: 'Emblem deleted' })
-			: res.status(404).json({ message: 'Not found' });
+			: res.status(404).json({ error: 'Not found' });
 	} catch (error) {
 		return res.status(500).json({ error });
 	}

@@ -29,7 +29,7 @@ const readBeacon = async (req: Request, res: Response, next: NextFunction) => {
 			: res.status(404).json({ message: `Not found beacon with id [${beaconId}]` });
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -49,9 +49,11 @@ const updateBeacon = async (req: Request, res: Response, next: NextFunction) => 
 
 	try {
 		const beacon = await Beacon.findById(beaconId).select('-__v');
+
 		if (!beacon) {
-			return res.status(404).json({ message: `Not found beacon with id [${beaconId}]` });
+			return res.status(404).json({ error: `Not found beacon with id [${beaconId}]` });
 		}
+
 		beacon.set(req.body);
 		beacon
 			.save()
@@ -59,7 +61,7 @@ const updateBeacon = async (req: Request, res: Response, next: NextFunction) => 
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
-			return res.status(400).json({ message: 'Invalid ID format' });
+			return res.status(400).json({ error: 'Invalid ID format' });
 		}
 		return res.status(500).json({ error });
 	}
@@ -72,7 +74,7 @@ const deleteBeacon = async (req: Request, res: Response, next: NextFunction) => 
 		const beacon = await Beacon.findByIdAndDelete(beaconId);
 		return beacon
 			? res.status(201).json({ message: 'Beacon deleted' })
-			: res.status(404).json({ message: 'Not found' });
+			: res.status(404).json({ error: 'Not found' });
 	} catch (error) {
 		return res.status(500).json({ error });
 	}
