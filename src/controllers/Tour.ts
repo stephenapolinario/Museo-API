@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import Tour from '../models/Tour';
+import Logging from '../library/Logging';
+import MuseumPiece from '../models/MuseumPiece';
+import Quiz from '../models/Quiz';
 
 const createTour = async (req: Request, res: Response, next: NextFunction) => {
 	const { title, subtitle, image } = req.body;
@@ -83,10 +86,38 @@ const deleteTour = async (req: Request, res: Response, next: NextFunction) => {
 	}
 };
 
+const readBeaconsFromTour = async (req: Request, res: Response, next: NextFunction) => {
+	const tourId = req.params.tourId;
+
+	try {
+		// 1. Ensure that the id exists
+		const tour = await Tour.findById(tourId);
+
+		if (!tour) {
+			Logging.info(`There is no Tour with ID [${tourId}]`);
+			return res.status(400).json({ error: `There is no Tour with ID [${tourId}]` });
+		}
+
+		// 2. Check all museums pieces from this Tour
+		const museumPieces = await MuseumPiece.find({ tour: tourId }).populate(['beacon']);
+
+		// 3. Check all quizzes from this tour
+		const quizzes = await Quiz.find({ tour: tourId }).populate(['beacon']);
+
+		return res.status(200).json({ museumPieces, quizzes });
+	} catch (error) {
+		if ((error as mongoose.Error).name === 'CastError') {
+			return res.status(400).json({ error: 'Invalid ID format' });
+		}
+		return res.status(400).json({ error });
+	}
+};
+
 export default {
 	createTour,
 	readTour,
 	readAll,
 	updateTour,
 	deleteTour,
+	readBeaconsFromTour,
 };

@@ -106,22 +106,25 @@ const deleteMuseumPiece = async (req: Request, res: Response, next: NextFunction
 };
 
 const readByTourMode = async (req: Request, res: Response, next: NextFunction) => {
-	const tourMode = req.params.tourMode;
+	const tourModeID = req.params.tourModeID;
 
 	try {
-		const providedTourMode = await Tour.findOne({ title: tourMode });
+		const providedTourMode = await Tour.findById(tourModeID);
 
 		if (!providedTourMode) {
-			Logging.warn(`There is no Tour Mode [${tourMode}]`);
-			return res.status(400).json({ error: `There is no Tour Mode [${tourMode}]` });
+			Logging.warn(`There is no Tour Mode with ID [${tourModeID}]`);
+			return res.status(400).json({ error: `There is no Tour Mode with ID [${tourModeID}]` });
 		}
 
 		const museumPiecesFromTourMode = await MuseumPiece.find({ tour: providedTourMode.id })
-			.populate(['tour', 'beacon'])
+			.populate(['beacon'])
 			.select('-__v');
 
 		return res.status(200).json({ museumPiecesFromTourMode });
 	} catch (error) {
+		if ((error as mongoose.Error).name === 'CastError') {
+			return res.status(400).json({ error: 'Invalid ID format' });
+		}
 		return res.status(500).json({ error });
 	}
 };

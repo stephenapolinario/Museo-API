@@ -13,8 +13,8 @@ const router = express.Router();
 
 // 1. Normal User Acess
 
-// Get Museum Pieces by Tour Mode
-router.get('/tour/:tourMode', controller.readByTourMode);
+// Get Museum Pieces by Tour Mode ID
+router.get('/tour/:tourModeID', controller.readByTourMode);
 
 // Get Museum Piece ByID
 router.get('/:museumPieceId', controller.readMuseumPiece);

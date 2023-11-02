@@ -6,10 +6,22 @@ import { CounponsMiddleware } from '../../middleware/Coupon';
 
 const router = express.Router();
 
-// Get all routeObject
+// ************************************************************
+// * This Users routes is splited in two partes:              *
+// * 1. Normal user acess (Users form the mobile application) *
+// * 2. Admin from the admin panel                            *
+// ************************************************************
+
+// 1. Normal User Acess
+
+router.get('/code/:couponCode', controller.readByCode);
+
+// 2. Admin Access Level
+
+// Get all Coupon
 router.get('/', verifyAdminJWT, controller.readAll);
 
-// Create routeObject
+// Create Coupon
 router.post(
 	'/',
 	[
@@ -20,17 +32,17 @@ router.post(
 	controller.createCoupon,
 );
 
-// Get routeObject ByID
+// Get Coupon ByID
 router.get('/:couponId', verifyAdminJWT, controller.readCoupon);
 
-// Update routeObject ByID
+// Update Coupon ByID
 router.patch(
 	'/:couponId',
 	[verifyAdminJWT, ValidateSchema(Schemas.coupon.update)],
 	controller.updateCoupon,
 );
 
-// Delete routeObject ByID
+// Delete Coupon ByID
 router.delete('/:couponId', verifyAdminJWT, controller.deleteCoupon);
 
 // Test new query -- FOR TESTING PURPOSES ONLY

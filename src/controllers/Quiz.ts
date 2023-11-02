@@ -11,7 +11,7 @@ import Emblem, { IEmblemModel } from '../models/Emblem';
 
 interface DecryptedData {
 	quiz: string;
-	points: number;
+	score: number;
 }
 
 const createQuiz = async (req: Request, res: Response, next: NextFunction) => {
@@ -184,8 +184,8 @@ const generatePerformance = async (req: Request, res: Response, next: NextFuncti
 			return res.status(400).json({ error: 'Some error in json parse' });
 		}
 
-		if (!('quiz' in userPerformance) || !('points' in userPerformance)) {
-			Logging.warn('There is no Quiz or Points in the provided performance');
+		if (!('quiz' in userPerformance) || !('score' in userPerformance)) {
+			Logging.warn('There is no Quiz or Score in the provided performance');
 			return res.status(400).json({ error: 'There is some error in your performance' });
 		}
 		const objectIdRegex = /^[0-9a-fA-F]{24}$/;
@@ -227,18 +227,18 @@ const generatePerformance = async (req: Request, res: Response, next: NextFuncti
 		let rightEmblem: IEmblemModel | undefined;
 		emblemByQuiz.forEach((emblem) => {
 			if (
-				userPerformance.points > emblem.minPoints &&
-				userPerformance.points <= emblem.maxPoints
+				userPerformance.score >= emblem.minPoints &&
+				userPerformance.score <= emblem.maxPoints
 			) {
 				rightEmblem = emblem;
 			}
 		});
 
 		// TODO: There is better ways to do that...
-		// If dont find any emblem for the user, use the lower points and Log...
+		// If dont find any emblem for the user, use the lower score and Log...
 		if (!rightEmblem || rightEmblem == undefined) {
 			Logging.error(
-				`There is no emblem for quiz [${userPerformance.quiz}] with [${userPerformance.points}] points.\nGiving the smallest min points emblem to the user [${providedUser._id}]`,
+				`There is no emblem for quiz [${userPerformance.quiz}] with [${userPerformance.score}] score.\nGiving the smallest min score emblem to the user [${providedUser._id}]`,
 			);
 			rightEmblem = emblemByQuiz.reduce((acc, curr) => {
 				return acc.minPoints < curr.minPoints ? acc : curr;

@@ -19,6 +19,9 @@ router.get('/', controller.readAll);
 // Get Tour ByID
 router.get('/:tourId', controller.readTour);
 
+// Get all beacons from Tour ID
+router.get('/beacons/:tourId', controller.readBeaconsFromTour);
+
 // 2. Admin Access Level
 
 // Create Tour

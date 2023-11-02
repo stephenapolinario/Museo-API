@@ -1,10 +1,21 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import { IEmblemModel } from './Emblem';
+import { IMuseumPieceModel } from './MuseumPiece';
 
 export interface IQuizPeformance {
 	quiz: string;
 	points: number;
 }
+
+export interface IUserFavorite {
+	favoriteID: string;
+}
+
+interface IUserRecoveryPassword {
+	code: string;
+	expirationDate: Date;
+}
+
 export interface IUser {
 	name: string;
 	lastName: string;
@@ -24,6 +35,13 @@ export interface IUser {
 	role: string;
 	emblems: IEmblemModel[];
 	quizPerformances: IQuizPeformance[];
+	favorites: IMuseumPieceModel[];
+	recoveryPassword: IUserRecoveryPassword;
+}
+
+export interface IUserUpdatePassword {
+	actualPassword: string;
+	newPassword: string;
 }
 
 export interface IUserModel extends IUser, Document {}
@@ -102,6 +120,21 @@ const UserSchema: Schema = new Schema(
 		quizPerformances: {
 			type: [Object],
 			default: [],
+		},
+		favorites: {
+			type: [Object],
+			default: [],
+		},
+		recoveryPassword: {
+			type: {
+				_id: false,
+				code: String,
+				expirationDate: Date,
+			},
+			default: {
+				code: '',
+				expirationDate: '',
+			},
 		},
 	},
 	{

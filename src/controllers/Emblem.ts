@@ -6,7 +6,7 @@ import Logging from '../library/Logging';
 import Quiz from '../models/Quiz';
 
 const createEmblem = async (req: Request, res: Response, next: NextFunction) => {
-	const { title, image, minPoints, maxPoints, quiz, tour } = req.body;
+	const { title, image, minPoints, maxPoints, quiz, color } = req.body;
 
 	const emblem = new Emblem({
 		_id: new mongoose.Types.ObjectId(),
@@ -15,6 +15,7 @@ const createEmblem = async (req: Request, res: Response, next: NextFunction) => 
 		minPoints,
 		maxPoints,
 		quiz,
+		color,
 	});
 
 	try {
@@ -36,7 +37,7 @@ const readEmblem = async (req: Request, res: Response, next: NextFunction) => {
 	const emblemId = req.params.emblemId;
 
 	try {
-		const emblem = await Emblem.findById(emblemId).populate('quiz').select('-__v');
+		const emblem = await Emblem.findById(emblemId).select('-__v');
 		return emblem
 			? res.status(200).json({ emblem })
 			: res.status(404).json({ message: `Not found emblem with id [${emblemId}]` });
@@ -50,7 +51,7 @@ const readEmblem = async (req: Request, res: Response, next: NextFunction) => {
 
 const readAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const emblems = await Emblem.find().populate('quiz').select('-__v');
+		const emblems = await Emblem.find().select('-__v');
 
 		return res.status(200).json({ emblems });
 	} catch (error) {

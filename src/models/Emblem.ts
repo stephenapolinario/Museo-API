@@ -6,6 +6,7 @@ export interface IEmblem {
 	minPoints: number;
 	maxPoints: number;
 	quiz: string;
+	color: string;
 }
 
 export interface IEmblemModel extends IEmblem, Document {}
@@ -25,6 +26,10 @@ const EmblemSchema: Schema = new Schema({
 	},
 	maxPoints: {
 		type: Number,
+		required: true,
+	},
+	color: {
+		type: String,
 		required: true,
 	},
 	quiz: {

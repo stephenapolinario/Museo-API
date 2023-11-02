@@ -1,7 +1,7 @@
 import Joi, { ObjectSchema } from 'joi';
 import { NextFunction, Response, Request } from 'express';
 import Logging from '../library/Logging';
-import { IUser } from '../models/User';
+import { IUser, IUserFavorite, IUserUpdatePassword } from '../models/User';
 import { IAdmin } from '../models/Admin';
 import { ICouponType } from '../models/Coupon/CouponType';
 import { ICouponAccess as ICouponAccess } from '../models/Coupon/CouponAccess';
@@ -54,8 +54,8 @@ export const Schemas = {
 			address: Joi.string().required(),
 			number: Joi.string().required(),
 			complement: Joi.string().allow(null, ''),
-			password: Joi.string().required(),
 			picture: Joi.string().uri().required(),
+			password: Joi.string().required(),
 		}),
 		update: Joi.object<IUser>({
 			name: Joi.string().allow(null, ''),
@@ -76,10 +76,27 @@ export const Schemas = {
 			number: Joi.string().allow(null, ''),
 			complement: Joi.string().allow(null, ''),
 			picture: Joi.string().uri().allow(null, ''),
-			password: Joi.string().allow(null, ''),
 		}),
 		login: Joi.object<IUser>({
-			email: Joi.string().required(),
+			email: Joi.string().allow(null, ''),
+			password: Joi.string().allow(null, ''),
+		}),
+		updatePassword: Joi.object<IUserUpdatePassword>({
+			actualPassword: Joi.string().required(),
+			newPassword: Joi.string().required(),
+		}),
+		manageFavorite: Joi.object<IUserFavorite>({
+			favoriteID: Joi.string()
+				.regex(/^[a-zA-Z0-9]{24}$/)
+				.required(),
+		}),
+		sendResetPassword: Joi.object({
+			email: Joi.string()
+				.email({ tlds: { allow: false } })
+				.required(),
+		}),
+		resetPassword: Joi.object({
+			code: Joi.string().required(),
 			password: Joi.string().required(),
 		}),
 	},
@@ -131,8 +148,8 @@ export const Schemas = {
 			access: Joi.array()
 				.items(Joi.string().regex(/^[a-zA-Z0-9]{24}$/))
 				.required(),
-			percentage: Joi.string().required(),
-			value: Joi.string().required(),
+			percentage: Joi.number().required(),
+			value: Joi.number().required(),
 		}),
 		update: Joi.object<ICoupon>({
 			code: Joi.string().allow(null, ''),
@@ -143,7 +160,7 @@ export const Schemas = {
 				.items(Joi.string().regex(/^[a-zA-Z0-9]{24}$/))
 				.allow(null, ''),
 			percentage: Joi.number().allow(null, ''),
-			value: Joi.string().allow(null, ''),
+			value: Joi.number().allow(null, ''),
 		}),
 	},
 	product: {
@@ -367,6 +384,7 @@ export const Schemas = {
 			image: Joi.string().uri().required(),
 			maxPoints: Joi.number().required(),
 			minPoints: Joi.number().required(),
+			color: Joi.string().required(),
 		}),
 		update: Joi.object<IEmblem>({
 			title: Joi.string().allow(null, ''),
@@ -376,6 +394,7 @@ export const Schemas = {
 			image: Joi.string().uri().allow(null, ''),
 			maxPoints: Joi.number().allow(null, ''),
 			minPoints: Joi.number().allow(null, ''),
+			color: Joi.string().allow(null, ''),
 		}),
 	},
 };

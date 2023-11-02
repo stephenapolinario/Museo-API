@@ -131,6 +131,25 @@ const couponByAccess = async (req: Request, res: Response, next: NextFunction) =
 	}
 };
 
+const readByCode = async (req: Request, res: Response, next: NextFunction) => {
+	const couponCode = req.params.couponCode;
+
+	try {
+		const coupon = await Coupon.findOne({ code: couponCode }).populate(['access', 'type']);
+
+		if (!coupon) {
+			Logging.warn(`There is no coupon  ${couponCode}`);
+			return res.status(400).json({ error: `There is no coupon ${couponCode}` });
+		}
+
+		return res.status(200).json({ coupon });
+	} catch (error) {
+		if ((error as mongoose.Error).name === 'CastError') {
+			return res.status(400).json({ error: 'Invalid ID format' });
+		}
+	}
+};
+
 export default {
 	createCoupon,
 	readCoupon,
@@ -138,4 +157,5 @@ export default {
 	updateCoupon,
 	deleteCoupon,
 	couponByAccess,
+	readByCode,
 };
