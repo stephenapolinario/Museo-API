@@ -52,7 +52,7 @@ const readAdmin = async (req: Request, res: Response, next: NextFunction) => {
 };
 const readAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const admins = await Admin.find().populate('role').select('-__v');
+		const admins = await Admin.find().select(['-__v', '-createdAt', '-updatedAt', '-role']);
 		return res.status(200).json({ admins });
 	} catch (error) {
 		return res.status(500).json({ error });
@@ -96,7 +96,7 @@ const deleteAdmin = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const admin = await Admin.findByIdAndDelete(adminId);
 		return admin
-			? res.status(201).json({ message: 'Admin deleted' })
+			? res.status(200).json({ message: 'Admin deleted' })
 			: res.status(404).json({ error: 'Not found admin with this ID' });
 	} catch (error) {
 		// If error is from mongoose cast error return invalid format id
@@ -111,7 +111,13 @@ const loginAdmin = async (req: Request, res: Response, next: NextFunction) => {
 	const { email, password } = req.body;
 
 	try {
-		const admin = await Admin.findOne({ email: email });
+		const admin = await Admin.findOne({ email: email }).select([
+			'-__v',
+			'-_id',
+			'-role',
+			'-createdAt',
+			'-updatedAt',
+		]);
 
 		if (!admin) {
 			return res.status(404).send({ error: 'Admin Not found' });
@@ -134,8 +140,11 @@ const loginAdmin = async (req: Request, res: Response, next: NextFunction) => {
 			expiresIn: '24h',
 		});
 
+		const { password: adminPassword, ...adminWithoutPassword } = admin.toObject();
+
 		res.status(200).send({
 			token: token,
+			admin: adminWithoutPassword,
 		});
 	} catch (error) {
 		Logging.error(`An error occurred when trying to locate the admin with e-mail [${email}]`);

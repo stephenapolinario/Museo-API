@@ -82,7 +82,7 @@ const updateMuseumPiece = async (req: Request, res: Response, next: NextFunction
 		museumPiece.set(req.body);
 		museumPiece
 			.save()
-			.then((museumPiece) => res.status(201).json({ museumPiece }))
+			.then((museumPiece) => res.status(200).json({ museumPiece }))
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {

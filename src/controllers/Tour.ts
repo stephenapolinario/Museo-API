@@ -63,7 +63,7 @@ const updateTour = async (req: Request, res: Response, next: NextFunction) => {
 
 		tour.set(req.body);
 		tour.save()
-			.then((tour) => res.status(201).json({ tour }))
+			.then((tour) => res.status(200).json({ tour }))
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {

@@ -171,8 +171,8 @@ export const Schemas = {
 			price: Joi.number().required(),
 			size: Joi.string().required(),
 			color: Joi.string().required(),
-			category: Joi.array()
-				.items(Joi.string().regex(/^[a-zA-Z0-9]{24}$/))
+			category: Joi.string()
+				.regex(/^[a-zA-Z0-9]{24}$/)
 				.required(),
 		}),
 		update: Joi.object<IProduct>({
@@ -182,8 +182,8 @@ export const Schemas = {
 			price: Joi.number().allow(null, ''),
 			size: Joi.string().allow(null, ''),
 			color: Joi.string().allow(null, ''),
-			category: Joi.array()
-				.items(Joi.string().regex(/^[a-zA-Z0-9]{24}$/))
+			category: Joi.string()
+				.regex(/^[a-zA-Z0-9]{24}$/)
 				.allow(null, ''),
 		}),
 	},

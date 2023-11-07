@@ -54,7 +54,7 @@ const updateCategory = async (req: Request, res: Response, next: NextFunction) =
 		category.set(req.body);
 		category
 			.save()
-			.then((category) => res.status(201).json({ category }))
+			.then((category) => res.status(200).json({ category }))
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {

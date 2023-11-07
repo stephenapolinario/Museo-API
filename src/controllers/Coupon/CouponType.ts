@@ -35,8 +35,8 @@ const readCouponType = async (req: Request, res: Response, next: NextFunction) =
 };
 const readAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const coupons = await CouponType.find();
-		return res.status(200).json({ coupons });
+		const couponsType = await CouponType.find();
+		return res.status(200).json({ couponsType });
 	} catch (error) {
 		return res.status(500).json({ error });
 	}

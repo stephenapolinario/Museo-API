@@ -5,6 +5,16 @@ import Beacon from '../models/Beacon';
 const createBeacon = async (req: Request, res: Response, next: NextFunction) => {
 	const { name, uuid } = req.body;
 
+	try {
+		const findExistingBeacon = await Beacon.findOne({ uuid });
+
+		if (findExistingBeacon) {
+			return res.status(400).json({ error: 'There is already an beacon with this UUID' });
+		}
+	} catch (error) {
+		return res.status(500).json({ error });
+	}
+
 	const beacon = new Beacon({
 		_id: new mongoose.Types.ObjectId(),
 		name,
@@ -57,7 +67,7 @@ const updateBeacon = async (req: Request, res: Response, next: NextFunction) => 
 		beacon.set(req.body);
 		beacon
 			.save()
-			.then((beacon) => res.status(201).json({ beacon }))
+			.then((beacon) => res.status(200).json({ beacon }))
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
@@ -73,7 +83,7 @@ const deleteBeacon = async (req: Request, res: Response, next: NextFunction) => 
 	try {
 		const beacon = await Beacon.findByIdAndDelete(beaconId);
 		return beacon
-			? res.status(201).json({ message: 'Beacon deleted' })
+			? res.status(200).json({ message: 'Beacon deleted' })
 			: res.status(404).json({ error: 'Not found' });
 	} catch (error) {
 		return res.status(500).json({ error });

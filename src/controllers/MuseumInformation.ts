@@ -96,7 +96,7 @@ const updateMuseumInformation = async (req: Request, res: Response, next: NextFu
 		museumInformation.set(req.body);
 		museumInformation
 			.save()
-			.then((museumInformation) => res.status(201).json({ museumInformation }))
+			.then((museumInformation) => res.status(200).json({ museumInformation }))
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {

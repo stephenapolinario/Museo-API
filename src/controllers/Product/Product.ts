@@ -83,7 +83,7 @@ const updateProduct = async (req: Request, res: Response, next: NextFunction) =>
 		product.set(req.body);
 		product
 			.save()
-			.then((product) => res.status(201).json({ product }))
+			.then((product) => res.status(200).json({ product }))
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {

@@ -57,7 +57,7 @@ const updateTicket = async (req: Request, res: Response, next: NextFunction) => 
 		ticket.set(req.body);
 		ticket
 			.save()
-			.then((ticket) => res.status(201).json({ ticket }))
+			.then((ticket) => res.status(200).json({ ticket }))
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {

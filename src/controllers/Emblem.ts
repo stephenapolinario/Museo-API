@@ -37,7 +37,7 @@ const readEmblem = async (req: Request, res: Response, next: NextFunction) => {
 	const emblemId = req.params.emblemId;
 
 	try {
-		const emblem = await Emblem.findById(emblemId).select('-__v');
+		const emblem = await Emblem.findById(emblemId).select('-__v').populate(['quiz']);
 		return emblem
 			? res.status(200).json({ emblem })
 			: res.status(404).json({ message: `Not found emblem with id [${emblemId}]` });
@@ -51,7 +51,7 @@ const readEmblem = async (req: Request, res: Response, next: NextFunction) => {
 
 const readAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const emblems = await Emblem.find().select('-__v');
+		const emblems = await Emblem.find().select('-__v').populate(['quiz']);
 
 		return res.status(200).json({ emblems });
 	} catch (error) {
@@ -83,7 +83,7 @@ const updateEmblem = async (req: Request, res: Response, next: NextFunction) => 
 		emblem.set(req.body);
 		emblem
 			.save()
-			.then((emblem) => res.status(201).json({ emblem }))
+			.then((emblem) => res.status(200).json({ emblem }))
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {
