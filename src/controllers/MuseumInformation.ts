@@ -4,13 +4,30 @@ import MuseumInformation from '../models/MuseumInformation';
 import Logging from '../library/Logging';
 
 const createMuseumInformation = async (req: Request, res: Response, next: NextFunction) => {
-	const { country, city, state, emailList, operationDay, phoneNumberList } = req.body;
+	const {
+		country,
+		city,
+		state,
+		neighborhood,
+		street,
+		streetNumber,
+		zip,
+		instagram,
+		emailList,
+		operationDay,
+		phoneNumberList,
+	} = req.body;
 
 	const museumInformation = new MuseumInformation({
 		_id: new mongoose.Types.ObjectId(),
 		country,
 		city,
 		state,
+		neighborhood,
+		street,
+		streetNumber,
+		zip,
+		instagram,
 		emailList,
 		operationDay,
 		phoneNumberList,
@@ -65,7 +82,11 @@ const readAll = async (req: Request, res: Response, next: NextFunction) => {
 
 const readUnique = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const museumInformations = await MuseumInformation.findOne({});
+		const museumInformations = await MuseumInformation.findOne({}).select([
+			'-createdAt',
+			'-updatedAt',
+			'-__v',
+		]);
 
 		if (!museumInformations) {
 			Logging.warn('There is no museum information right now, you need to create one first!');

@@ -67,7 +67,7 @@ const readQuiz = async (req: Request, res: Response, next: NextFunction) => {
 
 const readAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const quizs = await Quiz.find();
+		const quizs = await Quiz.find().populate(['beacon', 'tour']);
 		return res.status(200).json({ quizs });
 	} catch (error) {
 		return res.status(500).json({ error });
@@ -84,7 +84,7 @@ const updateQuiz = async (req: Request, res: Response, next: NextFunction) => {
 		}
 		quiz.set(req.body);
 		quiz.save()
-			.then((quiz) => res.status(201).json({ quiz }))
+			.then((quiz) => res.status(200).json({ quiz }))
 			.catch((error) => res.status(500).json({ error }));
 	} catch (error) {
 		if ((error as mongoose.Error).name === 'CastError') {

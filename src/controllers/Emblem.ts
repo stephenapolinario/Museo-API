@@ -37,7 +37,13 @@ const readEmblem = async (req: Request, res: Response, next: NextFunction) => {
 	const emblemId = req.params.emblemId;
 
 	try {
-		const emblem = await Emblem.findById(emblemId).select('-__v').populate(['quiz']);
+		const emblem = await Emblem.findById(emblemId)
+			.select('-__v')
+			.populate({
+				path: 'quiz',
+				populate: [{ path: 'beacon' }, { path: 'tour' }],
+			});
+		// const emblem = await Emblem.findById(emblemId).select('-__v').populate(['quiz']);
 		return emblem
 			? res.status(200).json({ emblem })
 			: res.status(404).json({ message: `Not found emblem with id [${emblemId}]` });
@@ -51,7 +57,12 @@ const readEmblem = async (req: Request, res: Response, next: NextFunction) => {
 
 const readAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const emblems = await Emblem.find().select('-__v').populate(['quiz']);
+		const emblems = await Emblem.find()
+			.select('-__v')
+			.populate({
+				path: 'quiz',
+				populate: [{ path: 'beacon' }, { path: 'tour' }],
+			});
 
 		return res.status(200).json({ emblems });
 	} catch (error) {

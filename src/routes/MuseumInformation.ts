@@ -5,8 +5,11 @@ import { Schemas, ValidateSchema } from '../middleware/ValidateSchema';
 
 const router = express.Router();
 // ************************************************************
-// *        This route are just for Admin Access Level        *
+// * This Users routes is splited in two partes:              *
+// * 1. Normal user acess (Users form the mobile application) *
+// * 2. Admin from the admin panel                            *
 // ************************************************************
+
 // NOTE: Its supose to have JUST ONE Museum Information on the database
 // NOTE2: For this porpouse, there is no need to implement Read All and Read by ID. They are commented routes.
 
@@ -15,9 +18,10 @@ const router = express.Router();
 
 // Get Museum Information ByID
 // router.get('/:museumInformationId', verifyAdminJWT, controller.readMuseumInformation);
+// 1. Normal User Acess
 
 // Get the UNIQUE Museum Information
-router.get('/', verifyAdminJWT, controller.readUnique);
+router.get('/', controller.readUnique);
 
 // Create Museum Information
 router.post(

@@ -4,9 +4,14 @@ export interface IMuseumInformation {
 	country: string;
 	state: string;
 	city: string;
+	neighborhood: string;
+	street: string;
+	streetNumber: string;
+	zip: string;
 	phoneNumberList: IPhoneNumber[];
 	emailList: IEmail[];
 	operationDay: IOperationDay[];
+	instagram: string;
 }
 
 export interface IPhoneNumber {
@@ -61,6 +66,30 @@ const IMuseumInformationSchema: Schema = new Schema(
 			required: true,
 		},
 		state: {
+			type: String,
+			required: true,
+		},
+		city: {
+			type: String,
+			required: true,
+		},
+		neighborhood: {
+			type: String,
+			required: true,
+		},
+		street: {
+			type: String,
+			required: true,
+		},
+		streetNumber: {
+			type: String,
+			required: true,
+		},
+		zip: {
+			type: String,
+			required: true,
+		},
+		instagram: {
 			type: String,
 			required: true,
 		},

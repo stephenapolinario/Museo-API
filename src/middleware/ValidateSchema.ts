@@ -322,6 +322,11 @@ export const Schemas = {
 			country: Joi.string().required(),
 			city: Joi.string().required(),
 			state: Joi.string().required(),
+			neighborhood: Joi.string().required(),
+			street: Joi.string().required(),
+			streetNumber: Joi.string().required(),
+			zip: Joi.string().required(),
+			instagram: Joi.string().required(),
 			emailList: Joi.array()
 				.items(
 					Joi.object<IEmail>({
@@ -350,6 +355,11 @@ export const Schemas = {
 			country: Joi.string().allow(null, ''),
 			city: Joi.string().allow(null, ''),
 			state: Joi.string().allow(null, ''),
+			neighborhood: Joi.string().allow(null, ''),
+			street: Joi.string().allow(null, ''),
+			streetNumber: Joi.string().allow(null, ''),
+			zip: Joi.string().allow(null, ''),
+			instagram: Joi.string().allow(null, ''),
 			emailList: Joi.array()
 				.items(
 					Joi.object<IEmail>({
