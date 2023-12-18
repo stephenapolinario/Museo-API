@@ -12,6 +12,8 @@ export interface IMuseumInformation {
 	emailList: IEmail[];
 	operationDay: IOperationDay[];
 	instagram: string;
+	storeOpen: boolean;
+	ticketOpen: boolean;
 }
 
 export interface IPhoneNumber {
@@ -103,6 +105,14 @@ const IMuseumInformationSchema: Schema = new Schema(
 		},
 		operationDay: {
 			type: [OperationDaySchema],
+			required: true,
+		},
+		ticketOpen: {
+			type: Boolean,
+			required: true,
+		},
+		storeOpen: {
+			type: Boolean,
 			required: true,
 		},
 	},

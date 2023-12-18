@@ -350,6 +350,8 @@ export const Schemas = {
 					}).required(),
 				)
 				.required(),
+			storeOpen: Joi.boolean().required(),
+			ticketOpen: Joi.boolean().required(),
 		}),
 		update: Joi.object<IMuseumInformation>({
 			country: Joi.string().allow(null, ''),
@@ -383,6 +385,8 @@ export const Schemas = {
 					}).allow(null, ''),
 				)
 				.allow(null, ''),
+			storeOpen: Joi.boolean().allow(null, ''),
+			ticketOpen: Joi.boolean().allow(null, ''),
 		}),
 	},
 	emblem: {

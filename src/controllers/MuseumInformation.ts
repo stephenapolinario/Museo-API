@@ -16,6 +16,8 @@ const createMuseumInformation = async (req: Request, res: Response, next: NextFu
 		emailList,
 		operationDay,
 		phoneNumberList,
+		ticketOpen,
+		storeOpen,
 	} = req.body;
 
 	const museumInformation = new MuseumInformation({
@@ -31,6 +33,8 @@ const createMuseumInformation = async (req: Request, res: Response, next: NextFu
 		emailList,
 		operationDay,
 		phoneNumberList,
+		ticketOpen,
+		storeOpen,
 	});
 
 	try {

@@ -1,0 +1,102 @@
+Date : 2023-11-19 19:26:46
+Directory : c:\dev\projects\TCC3\museo-node-typescript
+Total : 57 files,  3729 codes, 348 comments, 674 blanks, all 4751 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| TypeScript         |         53 |      3,636 |        259 |        662 |      4,557 |
+| JSON               |          2 |         49 |          0 |          2 |         51 |
+| JavaScript         |          1 |         29 |          0 |          1 |         30 |
+| JSON with Comments |          1 |         15 |         89 |          9 |        113 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                              | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                 |         57 |      3,729 |        348 |        674 |      4,751 |
+| . (Files)                                                                         |          4 |         93 |         89 |         12 |        194 |
+| src                                                                               |         53 |      3,636 |        259 |        662 |      4,557 |
+| src (Files)                                                                       |          1 |         95 |         11 |         17 |        123 |
+| src\config                                                                        |          1 |         25 |          0 |          6 |         31 |
+| src\controllers                                                                   |         15 |      1,947 |         64 |        357 |      2,368 |
+| src\controllers (Files)                                                           |         10 |      1,462 |         62 |        280 |      1,804 |
+| src\controllers\Coupon                                                            |          3 |        290 |          0 |         47 |        337 |
+| src\controllers\Product                                                           |          2 |        195 |          2 |         30 |        227 |
+| src\library                                                                       |          1 |         25 |          0 |          6 |         31 |
+| src\middleware                                                                    |          5 |        536 |         11 |         27 |        574 |
+| src\models                                                                        |         16 |        719 |          0 |         93 |        812 |
+| src\models (Files)                                                                |         11 |        571 |          0 |         68 |        639 |
+| src\models\Coupon                                                                 |          3 |         79 |          0 |         15 |         94 |
+| src\models\Product                                                                |          2 |         69 |          0 |         10 |         79 |
+| src\routes                                                                        |         14 |        289 |        173 |        156 |        618 |
+| src\routes (Files)                                                                |          9 |        175 |        125 |        104 |        404 |
+| src\routes\Coupon                                                                 |          3 |         74 |         23 |         29 |        126 |
+| src\routes\Product                                                                |          2 |         40 |         25 |         23 |         88 |
++-----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                          | language           | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| c:\dev\projects\TCC3\museo-node-typescript\.eslintrc.js                           | JavaScript         |         29 |          0 |          1 |         30 |
+| c:\dev\projects\TCC3\museo-node-typescript\.prettierrc                            | JSON               |         10 |          0 |          1 |         11 |
+| c:\dev\projects\TCC3\museo-node-typescript\package.json                           | JSON               |         39 |          0 |          1 |         40 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\config\config.ts                   | TypeScript         |         25 |          0 |          6 |         31 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\Admin.ts               | TypeScript         |        138 |          5 |         23 |        166 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\Beacon.ts              | TypeScript         |         84 |          0 |         16 |        100 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\Coupon\Coupon.ts       | TypeScript         |        136 |          0 |         26 |        162 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\Coupon\CouponAccess.ts | TypeScript         |         79 |          0 |         12 |         91 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\Coupon\CouponType.ts   | TypeScript         |         75 |          0 |          9 |         84 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\Emblem.ts              | TypeScript         |        107 |          1 |         19 |        127 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\MuseumInformation.ts   | TypeScript         |        136 |          0 |         20 |        156 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\MuseumPiece.ts         | TypeScript         |        119 |          0 |         21 |        140 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\Product\Category.ts    | TypeScript         |         75 |          0 |         12 |         87 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\Product\Product.ts     | TypeScript         |        120 |          2 |         18 |        140 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\Quiz.ts                | TypeScript         |        224 |         30 |         48 |        302 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\SendEmail.ts           | TypeScript         |         33 |          0 |          5 |         38 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\Ticket.ts              | TypeScript         |         78 |          0 |         12 |         90 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\Tour.ts                | TypeScript         |        101 |          3 |         20 |        124 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\controllers\User.ts                | TypeScript         |        442 |         23 |         96 |        561 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\library\Logging.ts                 | TypeScript         |         25 |          0 |          6 |         31 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\middleware\Coupon.ts               | TypeScript         |         49 |          0 |          8 |         57 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\middleware\Product.ts              | TypeScript         |         19 |          0 |          4 |         23 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\middleware\SignUp.ts               | TypeScript         |         34 |          1 |          6 |         41 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\middleware\ValidateSchema.ts       | TypeScript         |        404 |          7 |          4 |        415 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\middleware\VerifyAdmin.ts          | TypeScript         |         30 |          3 |          5 |         38 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\Admin.ts                    | TypeScript         |         28 |          0 |          5 |         33 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\Beacon.ts                   | TypeScript         |         22 |          0 |          5 |         27 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\Counter.ts                  | TypeScript         |         22 |          0 |          5 |         27 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\Coupon\Coupon.ts            | TypeScript         |         43 |          0 |          5 |         48 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\Coupon\CouponAccess.ts      | TypeScript         |         18 |          0 |          5 |         23 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\Coupon\CouponType.ts        | TypeScript         |         18 |          0 |          5 |         23 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\Emblem.ts                   | TypeScript         |         38 |          0 |          5 |         43 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\MuseumInformation.ts        | TypeScript         |        117 |          0 |         11 |        128 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\MuseumPiece.ts              | TypeScript         |         54 |          0 |          5 |         59 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\Product\Category.ts         | TypeScript         |         17 |          0 |          5 |         22 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\Product\Product.ts          | TypeScript         |         52 |          0 |          5 |         57 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\Quiz.ts                     | TypeScript         |         77 |          0 |          9 |         86 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\Role.ts                     | TypeScript         |         17 |          0 |          5 |         22 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\Ticket.ts                   | TypeScript         |         32 |          0 |          5 |         37 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\Tour.ts                     | TypeScript         |         27 |          0 |          4 |         31 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\models\User.ts                     | TypeScript         |        137 |          0 |          9 |        146 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\Admin.ts                    | TypeScript         |         21 |          6 |          9 |         36 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\Beacon.ts                   | TypeScript         |         15 |          5 |          8 |         28 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\Coupon\Access.ts            | TypeScript         |         24 |          5 |          8 |         37 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\Coupon\Coupon.ts            | TypeScript         |         26 |         13 |         13 |         52 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\Coupon\Type.ts              | TypeScript         |         24 |          5 |          8 |         37 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\Emblem.ts                   | TypeScript         |         15 |         12 |         11 |         38 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\MuseumInformation.ts        | TypeScript         |         18 |         16 |         10 |         44 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\MuseumPiece.ts              | TypeScript         |         20 |         13 |         12 |         45 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\Product\Category.ts         | TypeScript         |         19 |         12 |         11 |         42 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\Product\Product.ts          | TypeScript         |         21 |         13 |         12 |         46 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\Quiz.ts                     | TypeScript         |         16 |         29 |         13 |         58 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\Ticket.ts                   | TypeScript         |         15 |         12 |         11 |         38 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\Tour.ts                     | TypeScript         |         16 |         13 |         12 |         41 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\routes\User.ts                     | TypeScript         |         39 |         19 |         18 |         76 |
+| c:\dev\projects\TCC3\museo-node-typescript\src\server.ts                          | TypeScript         |         95 |         11 |         17 |        123 |
+| c:\dev\projects\TCC3\museo-node-typescript\tsconfig.json                          | JSON with Comments |         15 |         89 |          9 |        113 |
+| Total                                                                             |                    |      3,729 |        348 |        674 |      4,751 |
++-----------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
